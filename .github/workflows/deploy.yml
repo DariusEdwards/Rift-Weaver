@@ -3,7 +3,7 @@ name: Deploy Quartz site to GitHub Pages
 on:
   push:
     branches:
-      - v4  # Change to your working branch name
+      - v4  # Replace with your branch name if needed
 
 permissions:
   contents: read
@@ -29,9 +29,9 @@ jobs:
       - name: Build Quartz
         run: npx quartz build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@v2  # Use v2 instead of v3
         with:
-          path: public  # Make sure this path is correct
+          path: public  # Ensure this path is correct
 
   deploy:
     needs: build
