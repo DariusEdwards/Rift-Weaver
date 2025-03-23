@@ -3,7 +3,7 @@ name: Deploy Quartz site to GitHub Pages
 on:
   push:
     branches:
-      - v4  # Adjust if you use a different branch
+      - v4  # Adjust this if you're using a different branch
 
 permissions:
   contents: read
@@ -18,29 +18,23 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          fetch-depth: 0  # Fetch full history for Git information
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.14
-      - name: Install Dependencies
+          node-version: '18.14'
+      - name: Install dependencies
         run: npm ci
-      - name: Build Quartz
+      - name: Build Quartz site
         run: npx quartz build
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: quartz-build
-          path: public  # Ensure this matches where Quartz generates the built files
 
   deploy:
     needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public  # Make sure this points to the correct folder
