@@ -3,7 +3,7 @@ name: Deploy Quartz site to GitHub Pages
 on:
   push:
     branches:
-      - v4  # Replace with your branch name if needed
+      - v4  # Adjust if you use a different branch
 
 permissions:
   contents: read
@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Fetch all history for git info
+          fetch-depth: 0  # Fetch full history for Git information
       - uses: actions/setup-node@v3
         with:
           node-version: 18.14
@@ -29,10 +29,10 @@ jobs:
       - name: Build Quartz
         run: npx quartz build
       - name: Upload artifact
-        uses: actions/upload-artifact@v2  # Use v2 instead of v3
+        uses: actions/upload-artifact@v2
         with:
-        name: quartz-build
-        path: public  # Ensure this path is correct
+          name: quartz-build
+          path: public  # Ensure this matches where Quartz generates the built files
 
   deploy:
     needs: build
