@@ -31,7 +31,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2  # Use v2 instead of v3
         with:
-          path: public  # Ensure this path is correct
+        name: quartz-build
+        path: public  # Ensure this path is correct
 
   deploy:
     needs: build
